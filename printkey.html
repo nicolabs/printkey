@@ -1,0 +1,399 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+
+        <style type="text/css" media="print,screen">
+            * {
+                color: #000000;
+                background-color: #FFFFFF;
+            }
+            body {
+                font-size: 11pt;
+            }
+            .output {
+                width:100%;
+            }
+            #footer {
+                font-size: x-small;
+                text-align: center;
+            }
+            #date {
+                text-align: center;
+                font-size: x-small;
+            }
+            #key {
+                padding: 9pt;
+                text-align: left;   /* just to get rid of exotic default configurations with 'justified' or so */
+                border: solid black 3px;
+            }
+            /* this class attempts to make characters readable by OCR software */
+            .data {
+                color: black;
+                letter-spacing: 0.1em;  /* characters need to be well separated to have a chance to be recognized by OCR */
+                font-family: Consolas, Inconsolata, Courier new, monospace; /* fonts must allow to distinguish all cases, letters and numbers (e.g. i-I-l-1, o-O-0) */
+                font-size: 10pt;    /* use +/- buttons in the page to change it */
+            }
+            table#keyframe {
+                width:100%;
+                text-align: center;
+                border-collapse: collapse;
+                border: none;
+            }
+            #keyframe td {
+            }
+            #keyframe {
+                margin-top: 5pt;
+            }
+            #datatitle {
+                text-align: center;
+            }
+            #datatitle h1 {
+                padding:0;
+                margin:0;
+            }
+            #characterset .title {
+                font-style: italic;
+            }
+            code, pre.code {
+                display: block;
+                white-space: pre-wrap;
+                background-color: #DDDDDD !important;
+            }
+        </style>
+
+        <style type="text/css" media="print">
+            #input {
+                display:none;   /* hides input data that must not be printed */
+            }
+            #page1 {
+                page-break-after: always;
+            }
+            a, a:visited {
+                text-decoration: none;
+            }
+            .hideme {
+                display: none;
+            }
+        </style>
+
+        <style type="text/css" media="screen">
+            #showhidelink {
+                font-size: xx-small;
+                float:right;
+            }
+            #input {
+                display:visible;
+            }
+            .biginfo, #form label {
+                color: #0099FF;
+                font-weight: bold;
+            }
+            .smallinfo {
+                display: block;
+                color: #0099FF;
+                font-weight: normal;
+                font-style: italic;
+            }
+            #form label .hint {
+                font-weight: normal;
+                font-size: smaller;
+            }
+            #intro {
+                color: #444444;
+                text-align: justify;
+            }
+            .output {
+                border: solid 2px #DDDDDD;
+            }
+            .output, .output * {
+                background-color: #EEEEEE;
+            }
+            #inkey {
+                font-family: Courier, Sans;
+                font-size: xx-small;
+            }
+            #notice {
+                font-weight: bold;
+                color: #669933;
+            }
+            #fontsize {
+                text-align: center;
+            }
+            .fontbutton {
+                background-color: white;
+                padding-left: .5em;
+                padding-right: .5em;
+                text-decoration: none;
+            }
+        </style>
+
+        <script type="text/javascript">
+            /** Code from http://www.white-hat-web-design.co.uk/blog/controlling-font-size-with-javascript */
+            var min=6;
+            var max=40;
+            var def=10;  // default size in 'pt' ; must be equals to .data{font-size}
+
+            function increaseFontSize() {
+             
+               var key = document.getElementById("key");
+                  if( key.style.fontSize ) {
+                     var s = parseInt( key.style.fontSize.replace("pt","") );
+                  } else {
+                     var s = def;
+                  }
+                  if( s != max ) {
+                     s += 1;
+                  }
+                  key.style.fontSize = s+"pt";
+            }
+
+            function decreaseFontSize() {
+               var key = document.getElementById("key");
+
+                  if( key.style.fontSize ) {
+                     var s = parseInt( key.style.fontSize.replace("pt","") );
+                  } else {
+                     var s = def;
+                  }
+                  if( s != min ) {
+                     s -= 1;
+                  }
+                  key.style.fontSize = s+"pt";
+            }
+        </script>
+
+        <script type="text/javascript">
+
+            /** Updates the printable part with form data */
+            function update() {
+                document.getElementById("timestamp").innerHTML = new Date();
+                document.getElementById("key").innerHTML = document.getElementById("inkey").value;
+                document.getElementById("datacomment").innerHTML = document.getElementById("incomment").value;
+                var keyAlias = document.getElementById("inkeyalias").value;
+                if ( keyAlias != null && keyAlias.length > 0 ) {
+                    document.getElementById("keyalias_def").style.display = "none";
+                    document.getElementById("keyalias").innerHTML = keyAlias;
+                } else {
+                    document.getElementById("keyalias_def").style.display = "";
+                    document.getElementById("keyalias").innerHTML = "";
+                }
+            }
+
+            /** fills the form with demo data */
+            function demo() {
+                var sampleKey_RSAPEM = "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDAXbjIm8OXPTuZ\nP2Eou+Fr9FI5aj5knw4gM3QC3e2RRqLIqZeSOmChAs4i6NDeoqSk6ofdZMUiOGA7\nmOelle6IjvAGd3G6MoxaYjUfKN2lEfZ1nAM+jQszDD8Ix2hKkzBlG0O8ZUe8+FVI\nj8z0gccSKQJvlV+RX7Zexo43oxt7552fy8jE0zBWGrcj/KblyfvO97tXaaOYJ9kk\n5QfVN7ZandOmYS8Jab0k53oZ+MGC35h+a4XEaTSwYheaDtkxDv9GYqaDAJfrwDbt\nMSc/vIVoeggIh4HnkXVFJiC9mk3ljzB9WyKHcsaeItPMemci2vjIvFnvIB/Skzsq\nE2ce7XW1AgMBAAECggEAS230oSUC4vDtx7+kd3aEg/I/s6fHY2lC/rluShl/qDGM\nbyag+oPNlBUng2TLUiFwcgJM2DFFY4+7nGLuom1SJVX3JHH9tEdR5bcQoXFCyBFt\nFNziIMrpk1C//s9CQ8vHdD3mp58HLEAsINHSSiYBS0utWte1q6leN3egGIzqoACa\nMwd1A0Il/Kk4e0iLKawR6IdYfZLkRHK0x3osjQVK06jvhQyizCZtBJw8bOEGc/xc\n2mAS1+OFj5hZ2DahD9OLS4y8e8A24UudUuqdQl90pUqIwepXG+KR1y2Tr7dKeCY/\nK5YToXEFG7ovB4Bk1gVnFarRmUBM5KmOqDzF4AX0AQKBgQDe8CUJDDDYIF02fKtP\nFHJi7xuvoMAJxspmiAW7V1/uA1llQUVcbAeG1fS+YF+d9UU8bQ6OcXeM5mWzuRJg\nnrG+/myPC+DZ5pocIzJKQE7v3jd61RZW9os5sHNyMPsR44RtdYBhAWsjtW93l5Yr\njpBsybPzh5CQ3JwZBYdzKq5AgQKBgQDc5OkxsqAj+1Tucr+tG+yhftai4rhTeUXE\nHnJbBiSHwjNI+nSVntNtU9EmyLSzNoxOGAxcy8IA21w6l10COGH2O86417oqMOBi\npg3DtGh5OJSyVZSU+S0lggPsFLD8DvILE5jbJngZr9NPcEo4DHLmvPd434XGQm2b\nTQ6r4cybNQKBgBRAGg0dV156ah0l6+WuBMnp0Ej+wBLjRMVVe7fNswAKu9cPu74u\nbeyYiLe2R1kwy0421ciok+RvlTNjD0FJiPnBYJkJyi3g3YTKyamm98SgGcgFjRbv\nJCxkU8g+nL++O+w5bSTinRnMREjHszNXqtTG6ZqoaMBP2boIH4qdiOCBAoGBAL1z\nVs1Y9h/mHyGjKOG/YWPg9RUefhiZmkxqEIog6pPE61db90GbxpmtmWQ6H0DVN+CC\nn5e26dzyRle6GfsdgGc/RD0kSHaHFOuGn6eJw1C0RlPtMlHSo/XXXKXN2T1VVCJL\n3H2YsMjXE9S96enIQ4PB7j2s937i2j6oCD1Cm8lBAoGAJtMvztQV4IwY3VJvuEQs\nVRV5coGuhQmWS1zF1z9yG7BgGGZuIqNhtH1LW5zmL7ZvsRwdHJ94KZJVzkmSX1CY\naPNx5e9AGiUspXppmlkwPBNnkzeSD0GhhchkwpLtiVVeEj5eNP3cAq8gu3p6sfe4\najRTuzUIoiVyVEuBHU6eQGQ=\n-----END PRIVATE KEY-----\n-----BEGIN CERTIFICATE-----\nMIIDczCCAlugAwIBAgIEddOTCDANBgkqhkiG9w0BAQsFADBqMQswCQYDVQQGEwJG\nUjEPMA0GA1UECBMGRnJhbmNlMREwDwYDVQQHEwhGb28gY2l0eTEZMBcGA1UEChMQ\nRm9vIFRlY2hub2xvZ2llczELMAkGA1UECxMCSVQxDzANBgNVBAMTBk0uIEZvbzAe\nFw0xMjA2MTMxNTAyNTJaFw0xMjA2MTQxNTAyNTJaMGoxCzAJBgNVBAYTAkZSMQ8w\nDQYDVQQIEwZGcmFuY2UxETAPBgNVBAcTCEZvbyBjaXR5MRkwFwYDVQQKExBGb28g\nVGVjaG5vbG9naWVzMQswCQYDVQQLEwJJVDEPMA0GA1UEAxMGTS4gRm9vMIIBIjAN\nBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwF24yJvDlz07mT9hKLvha/RSOWo+\nZJ8OIDN0At3tkUaiyKmXkjpgoQLOIujQ3qKkpOqH3WTFIjhgO5jnpZXuiI7wBndx\nujKMWmI1HyjdpRH2dZwDPo0LMww/CMdoSpMwZRtDvGVHvPhVSI/M9IHHEikCb5Vf\nkV+2XsaON6Mbe+edn8vIxNMwVhq3I/ym5cn7zve7V2mjmCfZJOUH1Te2Wp3TpmEv\nCWm9JOd6GfjBgt+YfmuFxGk0sGIXmg7ZMQ7/RmKmgwCX68A27TEnP7yFaHoICIeB\n55F1RSYgvZpN5Y8wfVsih3LGniLTzHpnItr4yLxZ7yAf0pM7KhNnHu11tQIDAQAB\noyEwHzAdBgNVHQ4EFgQU3zvhWFjxWoVAcyKyKYWEG3NnqvUwDQYJKoZIhvcNAQEL\nBQADggEBAKpQ7rPL1ECDS3ctmut7Ng1TVFdlsc9XhnVUBfvBS9sG6WfDW3b6VVhC\nWaC7SGGpKM+/62cVG09YEDZuTh5NzTrxCizcIeyr5ert1hwjeDIjojmW1Ejpsznl\nF+GW4Jhtg6zrsCqJDeFUwxdfRBjdlA17gVVCT0nLS+/8GIN5kueJqcHiCmzT8x8q\nVzR7EMquRMuEQbtvBSjth3eBEcCUGYsb1GVH6HVt1UKYwd0oeDygxIwS8awLGKJr\nynjxpg06Z/JzF9dz8aocPwOWLelXhoUuQpzg1hxzXyII6GcmkyV9jox64Cuyz0oZ\nqEsMlDicsPdMaJs4Y5/yI1ZzTJMOD+g=\n-----END CERTIFICATE-----";
+                document.getElementById("inkey").value = sampleKey_RSAPEM;
+                document.getElementById("inkeyalias").value = "foo@android";
+                document.getElementById("incomment").value = "Password : foobar<br>Enjoy !";
+                update();
+            }
+
+        </script>
+
+        <title>Paper backup for cryptographic keys</title>
+
+    </head>
+    <body onload="javascript:demo();">
+
+       <!-- FORM PRESENTATION AND INPUT DATA -->
+       <div id="input">
+
+            <h1>Paper backup for cryptographic key</h1>
+
+            <!-- INPUT DATA -->
+            <p id="intro">Use this page to pretty-print your cryptographic key to paper as a 'disconnected' backup.<br>
+            It does nothing with the data, it just formats it for printing.<br>
+            Feel free to look at the code of this page, download it, modify it.<br>
+            </p>
+
+            <p id="notice">Don't worry : NOTHING is sent to the Internet, you can disconnect from the network if you wish.</p>
+
+            <p class="biginfo">Please fill the following form, then print this page to backup your key data to paper.<br>
+            Make sure that you can read all characters on the printed 
+result, because in order to restore the key you will need to type 
+exactly all characters.
+            Especially, make sure that you can distinguish i,I,l,1 and 
+o,O,0.</p>
+
+            <form id="form" onsubmit="javascript:update();return false;">
+                <table>
+                    <tbody><tr><td><label>Key alias</label></td><td><input value="foo@android" id="inkeyalias" onchange="javascript:update();" onkeydown="javascript:update();" type="text"></td>
+                    </tr><tr><td><label>Comment</label></td><td><textarea id="incomment" type="text" onchange="javascript:update();" onkeydown="javascript:update();">Password : foobar&lt;br&gt;Enjoy !</textarea></td>
+                    </tr><tr><td><label>Key data <span class="hint">(ex. PEM format)</span></label></td><td><textarea id="inkey" rows="27" cols="65" onchange="javascript:update();" onkeydown="javascript:update();">-----BEGIN PRIVATE KEY-----
+MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDAXbjIm8OXPTuZ
+P2Eou+Fr9FI5aj5knw4gM3QC3e2RRqLIqZeSOmChAs4i6NDeoqSk6ofdZMUiOGA7
+mOelle6IjvAGd3G6MoxaYjUfKN2lEfZ1nAM+jQszDD8Ix2hKkzBlG0O8ZUe8+FVI
+j8z0gccSKQJvlV+RX7Zexo43oxt7552fy8jE0zBWGrcj/KblyfvO97tXaaOYJ9kk
+5QfVN7ZandOmYS8Jab0k53oZ+MGC35h+a4XEaTSwYheaDtkxDv9GYqaDAJfrwDbt
+MSc/vIVoeggIh4HnkXVFJiC9mk3ljzB9WyKHcsaeItPMemci2vjIvFnvIB/Skzsq
+E2ce7XW1AgMBAAECggEAS230oSUC4vDtx7+kd3aEg/I/s6fHY2lC/rluShl/qDGM
+byag+oPNlBUng2TLUiFwcgJM2DFFY4+7nGLuom1SJVX3JHH9tEdR5bcQoXFCyBFt
+FNziIMrpk1C//s9CQ8vHdD3mp58HLEAsINHSSiYBS0utWte1q6leN3egGIzqoACa
+Mwd1A0Il/Kk4e0iLKawR6IdYfZLkRHK0x3osjQVK06jvhQyizCZtBJw8bOEGc/xc
+2mAS1+OFj5hZ2DahD9OLS4y8e8A24UudUuqdQl90pUqIwepXG+KR1y2Tr7dKeCY/
+K5YToXEFG7ovB4Bk1gVnFarRmUBM5KmOqDzF4AX0AQKBgQDe8CUJDDDYIF02fKtP
+FHJi7xuvoMAJxspmiAW7V1/uA1llQUVcbAeG1fS+YF+d9UU8bQ6OcXeM5mWzuRJg
+nrG+/myPC+DZ5pocIzJKQE7v3jd61RZW9os5sHNyMPsR44RtdYBhAWsjtW93l5Yr
+jpBsybPzh5CQ3JwZBYdzKq5AgQKBgQDc5OkxsqAj+1Tucr+tG+yhftai4rhTeUXE
+HnJbBiSHwjNI+nSVntNtU9EmyLSzNoxOGAxcy8IA21w6l10COGH2O86417oqMOBi
+pg3DtGh5OJSyVZSU+S0lggPsFLD8DvILE5jbJngZr9NPcEo4DHLmvPd434XGQm2b
+TQ6r4cybNQKBgBRAGg0dV156ah0l6+WuBMnp0Ej+wBLjRMVVe7fNswAKu9cPu74u
+beyYiLe2R1kwy0421ciok+RvlTNjD0FJiPnBYJkJyi3g3YTKyamm98SgGcgFjRbv
+JCxkU8g+nL++O+w5bSTinRnMREjHszNXqtTG6ZqoaMBP2boIH4qdiOCBAoGBAL1z
+Vs1Y9h/mHyGjKOG/YWPg9RUefhiZmkxqEIog6pPE61db90GbxpmtmWQ6H0DVN+CC
+n5e26dzyRle6GfsdgGc/RD0kSHaHFOuGn6eJw1C0RlPtMlHSo/XXXKXN2T1VVCJL
+3H2YsMjXE9S96enIQ4PB7j2s937i2j6oCD1Cm8lBAoGAJtMvztQV4IwY3VJvuEQs
+VRV5coGuhQmWS1zF1z9yG7BgGGZuIqNhtH1LW5zmL7ZvsRwdHJ94KZJVzkmSX1CY
+aPNx5e9AGiUspXppmlkwPBNnkzeSD0GhhchkwpLtiVVeEj5eNP3cAq8gu3p6sfe4
+ajRTuzUIoiVyVEuBHU6eQGQ=
+-----END PRIVATE KEY-----
+-----BEGIN CERTIFICATE-----
+MIIDczCCAlugAwIBAgIEddOTCDANBgkqhkiG9w0BAQsFADBqMQswCQYDVQQGEwJG
+UjEPMA0GA1UECBMGRnJhbmNlMREwDwYDVQQHEwhGb28gY2l0eTEZMBcGA1UEChMQ
+Rm9vIFRlY2hub2xvZ2llczELMAkGA1UECxMCSVQxDzANBgNVBAMTBk0uIEZvbzAe
+Fw0xMjA2MTMxNTAyNTJaFw0xMjA2MTQxNTAyNTJaMGoxCzAJBgNVBAYTAkZSMQ8w
+DQYDVQQIEwZGcmFuY2UxETAPBgNVBAcTCEZvbyBjaXR5MRkwFwYDVQQKExBGb28g
+VGVjaG5vbG9naWVzMQswCQYDVQQLEwJJVDEPMA0GA1UEAxMGTS4gRm9vMIIBIjAN
+BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwF24yJvDlz07mT9hKLvha/RSOWo+
+ZJ8OIDN0At3tkUaiyKmXkjpgoQLOIujQ3qKkpOqH3WTFIjhgO5jnpZXuiI7wBndx
+ujKMWmI1HyjdpRH2dZwDPo0LMww/CMdoSpMwZRtDvGVHvPhVSI/M9IHHEikCb5Vf
+kV+2XsaON6Mbe+edn8vIxNMwVhq3I/ym5cn7zve7V2mjmCfZJOUH1Te2Wp3TpmEv
+CWm9JOd6GfjBgt+YfmuFxGk0sGIXmg7ZMQ7/RmKmgwCX68A27TEnP7yFaHoICIeB
+55F1RSYgvZpN5Y8wfVsih3LGniLTzHpnItr4yLxZ7yAf0pM7KhNnHu11tQIDAQAB
+oyEwHzAdBgNVHQ4EFgQU3zvhWFjxWoVAcyKyKYWEG3NnqvUwDQYJKoZIhvcNAQEL
+BQADggEBAKpQ7rPL1ECDS3ctmut7Ng1TVFdlsc9XhnVUBfvBS9sG6WfDW3b6VVhC
+WaC7SGGpKM+/62cVG09YEDZuTh5NzTrxCizcIeyr5ert1hwjeDIjojmW1Ejpsznl
+F+GW4Jhtg6zrsCqJDeFUwxdfRBjdlA17gVVCT0nLS+/8GIN5kueJqcHiCmzT8x8q
+VzR7EMquRMuEQbtvBSjth3eBEcCUGYsb1GVH6HVt1UKYwd0oeDygxIwS8awLGKJr
+ynjxpg06Z/JzF9dz8aocPwOWLelXhoUuQpzg1hxzXyII6GcmkyV9jox64Cuyz0oZ
+qEsMlDicsPdMaJs4Y5/yI1ZzTJMOD+g=
+-----END CERTIFICATE-----</textarea></td></tr>
+                    <tr><td colspan="2" style="text-align:center"><input value="Update" type="submit"></td></tr>
+                </tbody></table>
+            </form>
+
+            <span class="biginfo">The page will look like :</span>
+            <span class="smallinfo">Use the "print preview" feature of your browser to preview accurate rendering</span>
+
+        </div>
+
+        <!-- ONLY THIS PART WILL BE DISPLAYED / PRINTED -->
+
+        <!-- RECTO -->
+        <div id="page1" class="output">
+            <table style="width:100%">
+                <tbody><tr>
+                    <td id="datatitle" style="width:100%"><h2><span style="display: none;" id="keyalias_def">Key backup</span><span id="keyalias">foo@android</span></h2><div id="date">Date : <span id="timestamp">Sat Jan 31 2015 15:45:59 GMT+0100 (CET)</span></div></td>
+                    <td id="characterset" rowspan="3"><span class="title">Sample character set :</span><div class="data">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>1234567890+/</div></td>
+                </tr>
+                <tr>
+                    <td id="datacomment">Password : foobar<br>Enjoy !</td>
+                </tr>
+            </tbody></table>
+
+            <div id="fontsize" class="hideme">change font size : <a href="javascript:increaseFontSize();" class="fontbutton">+</a> <a href="javascript:decreaseFontSize();" class="fontbutton">-</a></div>
+            <table id="keyframe">
+                <tbody><tr><td width="50%"></td><td><pre id="key" class="data">-----BEGIN PRIVATE KEY-----
+MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDAXbjIm8OXPTuZ
+P2Eou+Fr9FI5aj5knw4gM3QC3e2RRqLIqZeSOmChAs4i6NDeoqSk6ofdZMUiOGA7
+mOelle6IjvAGd3G6MoxaYjUfKN2lEfZ1nAM+jQszDD8Ix2hKkzBlG0O8ZUe8+FVI
+j8z0gccSKQJvlV+RX7Zexo43oxt7552fy8jE0zBWGrcj/KblyfvO97tXaaOYJ9kk
+5QfVN7ZandOmYS8Jab0k53oZ+MGC35h+a4XEaTSwYheaDtkxDv9GYqaDAJfrwDbt
+MSc/vIVoeggIh4HnkXVFJiC9mk3ljzB9WyKHcsaeItPMemci2vjIvFnvIB/Skzsq
+E2ce7XW1AgMBAAECggEAS230oSUC4vDtx7+kd3aEg/I/s6fHY2lC/rluShl/qDGM
+byag+oPNlBUng2TLUiFwcgJM2DFFY4+7nGLuom1SJVX3JHH9tEdR5bcQoXFCyBFt
+FNziIMrpk1C//s9CQ8vHdD3mp58HLEAsINHSSiYBS0utWte1q6leN3egGIzqoACa
+Mwd1A0Il/Kk4e0iLKawR6IdYfZLkRHK0x3osjQVK06jvhQyizCZtBJw8bOEGc/xc
+2mAS1+OFj5hZ2DahD9OLS4y8e8A24UudUuqdQl90pUqIwepXG+KR1y2Tr7dKeCY/
+K5YToXEFG7ovB4Bk1gVnFarRmUBM5KmOqDzF4AX0AQKBgQDe8CUJDDDYIF02fKtP
+FHJi7xuvoMAJxspmiAW7V1/uA1llQUVcbAeG1fS+YF+d9UU8bQ6OcXeM5mWzuRJg
+nrG+/myPC+DZ5pocIzJKQE7v3jd61RZW9os5sHNyMPsR44RtdYBhAWsjtW93l5Yr
+jpBsybPzh5CQ3JwZBYdzKq5AgQKBgQDc5OkxsqAj+1Tucr+tG+yhftai4rhTeUXE
+HnJbBiSHwjNI+nSVntNtU9EmyLSzNoxOGAxcy8IA21w6l10COGH2O86417oqMOBi
+pg3DtGh5OJSyVZSU+S0lggPsFLD8DvILE5jbJngZr9NPcEo4DHLmvPd434XGQm2b
+TQ6r4cybNQKBgBRAGg0dV156ah0l6+WuBMnp0Ej+wBLjRMVVe7fNswAKu9cPu74u
+beyYiLe2R1kwy0421ciok+RvlTNjD0FJiPnBYJkJyi3g3YTKyamm98SgGcgFjRbv
+JCxkU8g+nL++O+w5bSTinRnMREjHszNXqtTG6ZqoaMBP2boIH4qdiOCBAoGBAL1z
+Vs1Y9h/mHyGjKOG/YWPg9RUefhiZmkxqEIog6pPE61db90GbxpmtmWQ6H0DVN+CC
+n5e26dzyRle6GfsdgGc/RD0kSHaHFOuGn6eJw1C0RlPtMlHSo/XXXKXN2T1VVCJL
+3H2YsMjXE9S96enIQ4PB7j2s937i2j6oCD1Cm8lBAoGAJtMvztQV4IwY3VJvuEQs
+VRV5coGuhQmWS1zF1z9yG7BgGGZuIqNhtH1LW5zmL7ZvsRwdHJ94KZJVzkmSX1CY
+aPNx5e9AGiUspXppmlkwPBNnkzeSD0GhhchkwpLtiVVeEj5eNP3cAq8gu3p6sfe4
+ajRTuzUIoiVyVEuBHU6eQGQ=
+-----END PRIVATE KEY-----
+-----BEGIN CERTIFICATE-----
+MIIDczCCAlugAwIBAgIEddOTCDANBgkqhkiG9w0BAQsFADBqMQswCQYDVQQGEwJG
+UjEPMA0GA1UECBMGRnJhbmNlMREwDwYDVQQHEwhGb28gY2l0eTEZMBcGA1UEChMQ
+Rm9vIFRlY2hub2xvZ2llczELMAkGA1UECxMCSVQxDzANBgNVBAMTBk0uIEZvbzAe
+Fw0xMjA2MTMxNTAyNTJaFw0xMjA2MTQxNTAyNTJaMGoxCzAJBgNVBAYTAkZSMQ8w
+DQYDVQQIEwZGcmFuY2UxETAPBgNVBAcTCEZvbyBjaXR5MRkwFwYDVQQKExBGb28g
+VGVjaG5vbG9naWVzMQswCQYDVQQLEwJJVDEPMA0GA1UEAxMGTS4gRm9vMIIBIjAN
+BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwF24yJvDlz07mT9hKLvha/RSOWo+
+ZJ8OIDN0At3tkUaiyKmXkjpgoQLOIujQ3qKkpOqH3WTFIjhgO5jnpZXuiI7wBndx
+ujKMWmI1HyjdpRH2dZwDPo0LMww/CMdoSpMwZRtDvGVHvPhVSI/M9IHHEikCb5Vf
+kV+2XsaON6Mbe+edn8vIxNMwVhq3I/ym5cn7zve7V2mjmCfZJOUH1Te2Wp3TpmEv
+CWm9JOd6GfjBgt+YfmuFxGk0sGIXmg7ZMQ7/RmKmgwCX68A27TEnP7yFaHoICIeB
+55F1RSYgvZpN5Y8wfVsih3LGniLTzHpnItr4yLxZ7yAf0pM7KhNnHu11tQIDAQAB
+oyEwHzAdBgNVHQ4EFgQU3zvhWFjxWoVAcyKyKYWEG3NnqvUwDQYJKoZIhvcNAQEL
+BQADggEBAKpQ7rPL1ECDS3ctmut7Ng1TVFdlsc9XhnVUBfvBS9sG6WfDW3b6VVhC
+WaC7SGGpKM+/62cVG09YEDZuTh5NzTrxCizcIeyr5ert1hwjeDIjojmW1Ejpsznl
+F+GW4Jhtg6zrsCqJDeFUwxdfRBjdlA17gVVCT0nLS+/8GIN5kueJqcHiCmzT8x8q
+VzR7EMquRMuEQbtvBSjth3eBEcCUGYsb1GVH6HVt1UKYwd0oeDygxIwS8awLGKJr
+ynjxpg06Z/JzF9dz8aocPwOWLelXhoUuQpzg1hxzXyII6GcmkyV9jox64Cuyz0oZ
+qEsMlDicsPdMaJs4Y5/yI1ZzTJMOD+g=
+-----END CERTIFICATE-----</pre></td><td width="50%"></td></tr>
+                <tr><td colspan="3"><div id="footer"><a href="http://nicobo.net/tools/printkey.html">Find this tool at http://nicobo.net/tools/printkey.html</a></div></td></tr>
+            </tbody></table>
+
+        </div>
+
+        <!-- VERSO (INSTRUCTIONS) -->
+        <div id="page2" class="output">
+
+            <h2>How to restore this key</h2>
+
+            <p>To restore this key, type the characters from the frame into a text file that you will import into your key store.
+            Also include line breaks and '<i>BEGIN</i>' and '<i>END</i>' lines.</p>
+
+            <h3>Instructions for Java keystores</h3>
+
+            <h4>Restoring key from text file</h4>
+<pre class="code">openssl pkcs12 -export -in foo-restored.pem -out foo-restored.p12
+
+keytool -importkeystore -srckeystore foo-restored.p12 -srcstoretype pkcs12 -destkeystore restored.jks -deststoretype jks -srcalias 1 -destalias foorestored</pre>
+            <ul>
+            <li><tt>foo-restored.pem</tt> is the text file containing the data you typed. You can delete it afterwards.
+            </li><li><tt>foo-restored.p12</tt> is an intermediate file that can be also deleted afterwards.
+            </li><li><tt>restored.jks</tt> is the destination Java keystore where you want to import your restored key
+            </li><li><tt>foorestored</tt> is the alias of your restored key in the keystore
+            </li></ul>
+
+            <h4>Exporting key to readable text</h4>
+            <p>Follow those instructions if you want to backup another key.</p>
+<pre class="code">keytool -importkeystore -srcstoretype jks -srcalias foo -deststoretype pkcs12 -srckeystore mykeys.jks -destkeystore foo.p12
+
+openssl pkcs12 -in foo.p12 -out foo.pem -nodes</pre>
+            <ul>
+            <li><tt>foo</tt> is the alias of your key in the keystore
+            </li><li><tt>mykeys.jks</tt> is the Java keystore where to find the key
+            </li><li><tt>foo.p12</tt> is an intermediate file that can be deleted afterwards.
+            </li><li><tt>foo.pem</tt> contains key data as text. Print it.
+            </li></ul>
+
+            <h2>Useful links</h2>
+            <ul class="printlinks">
+            <li>This tool and more detailed instructions : <a href="http://www.nicobo.net/articles/paper-backup-your-private-key">http://www.nicobo.net/articles/paper-backup-your-private-key</a>
+            </li><li>Keytool (install the latest JDK) : <a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/keytool.html">http://docs.oracle.com/javase/7/docs/technotes/tools/windows/keytool.html</a>
+            </li><li>OpenSSL (docs and binaries) : <a href="http://www.openssl.org/docs/apps/openssl.html">http://www.openssl.org/docs/apps/openssl.html</a>
+            </li><li>KeyStore Explorer (GUI) : <a href="http://www.lazgosoftware.com/kse/index.html">http://www.lazgosoftware.com/kse/index.html</a>
+            </li><li>The GNU Privacy Guard : <a href="http://www.gnupg.org/gph/en/manual.html">http://www.gnupg.org/gph/en/manual.html</a>
+            </li><li>Introduction to PGP : <a href="http://www.pgpi.org/doc/pgpintro">http://www.pgpi.org/doc/pgpintro</a>
+            </li><li>Tesseract - an open source OCR software : <a href="http://code.google.com/p/tesseract-ocr">http://code.google.com/p/tesseract-ocr</a>
+            </li><li><a href="http://en.wikipedia.org/wiki/Paper_key">http://en.wikipedia.org/wiki/Paper_key</a>
+            </li><li>Paperkey - an OpenPGP key archiver : <a href="http://www.jabberwocky.com/software/paperkey/">http://www.jabberwocky.com/software/paperkey</a>
+            </li><li>Safeberg's ® Trusted Paper Key : <a href="http://www.safeberg.com/en/howitworks/usagetrustedpaperkey">http://www.safeberg.com/en/howitworks/usagetrustedpaperkey</a>
+            </li></ul>
+        </div>
+
+    
+
+</body></html>
